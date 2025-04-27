@@ -97,23 +97,40 @@
                                     </div>
                                  </div>
                                  <div class="col-md-6">
-                                    <form class="transfot">
+                                    <form class="transfot" id="loginForm">
                                        <div class="col-md-12">
-                                          <span>Professional Services</span>
-                                          <h3>My Account</h3>
+                                           <span>Professional Services</span>
+                                           <h3>My Account</h3>
                                        </div>
                                        <div class="col-md-12">
-                                          <input class="transfot_form" placeholder="User" type="text" name="User">
+                                           <input class="transfot_form" placeholder="User" type="text" name="User" id="username">
                                        </div>
                                        <div class="col-md-12">
-                                          <input class="transfot_form" placeholder="Password" type="text" name="Password">
+                                           <input class="transfot_form" placeholder="Password" type="password" name="Password" id="password">
                                        </div>
                                        <div class="col-md-12">
-                                          <a href="Services.html" class="get_noww">
-                                             Sign in
-                                           </a>
+                                           <button type="button" class="get_noww" onclick="validarAcceso()">
+                                               Sign in
+                                           </button>
+                                           <div id="mensajeError" style="color: red; margin-top: 10px;"></div>
                                        </div>
-                                    </form>
+                                   </form>
+                                   
+                                   <script>
+                                   function validarAcceso() {
+                                       const usuarioIngresado = document.getElementById('username').value;
+                                       const contrasenaIngresada = document.getElementById('password').value;
+                                       const mensajeErrorDiv = document.getElementById('mensajeError');
+                                   
+                                       if (usuarioIngresado === 'admin' && contrasenaIngresada === '123') {
+                                           // Redirigir a la página de servicios si la validación es exitosa
+                                           window.location.href = 'Services.html';
+                                       } else {
+                                           // Mostrar un mensaje de error si la validación falla
+                                           mensajeErrorDiv.textContent = 'Usuario o contraseña incorrectos.';
+                                       }
+                                   }
+                                   </script>
                                  </div>
                               </div>
                            </div>
@@ -125,296 +142,6 @@
          </div>
       </section>
       <!-- end banner -->
-      <!-- about section -->
-      <div id="about" class="about ">
-         <div class="container">
-            <div class="row d_flex">
-               <div class="col-md-6">
-                  <div class="about_right">
-                     <figure><img src="images/about.png" alt="#"/></figure>
-                  </div>
-               </div>
-               <div class="col-md-6">
-                  <div class="titlepage">
-                     <h2>About Us</h2>
-                     <p> There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, There 
-                     </p>
-                     <a class="read_more" href="#">Read More</a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- about section -->
-      <!-- vehicles section -->
-      <section id="vehicles" class="vehicles">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="titlepage">
-                     <h2>Our Vehicles</h2>
-                     <p>nternet. It uses a dictionary of over 200 Latin words, combined with .</p>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div id="veh" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-               <li data-target="#veh" data-slide-to="0" class="active"></li>
-               <li data-target="#veh" data-slide-to="1"></li>
-               <li data-target="#veh" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-               <div class="carousel-item active">
-                  <div class="container">
-                     <div class="carousel-caption">
-                        <div class="row">
-                           <div class="col-md-4">
-                              <div class="vehicles_truck">
-                                 <figure><img src="images/truc1.png" alt="#"/></figure>
-                              </div>
-                           </div>
-                           <div class="col-md-4">
-                              <div class="vehicles_truck">
-                                 <figure><img src="images/truc2.png" alt="#"/></figure>
-                              </div>
-                              <h3 class="blac_co">Truck</h3>
-                           </div>
-                           <div class="col-md-4">
-                              <div class="vehicles_truck">
-                                 <figure><img src="images/truc3.png" alt="#"/></figure>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="carousel-item">
-                  <div class="container">
-                     <div class="carousel-caption">
-                        <div class="row">
-                           <div class="col-md-4">
-                              <div class="vehicles_truck">
-                                 <figure><img src="images/truc1.png" alt="#"/></figure>
-                              </div>
-                           </div>
-                           <div class="col-md-4">
-                              <div class="vehicles_truck">
-                                 <figure><img src="images/truc2.png" alt="#"/></figure>
-                              </div>
-                              <h3 class="blac_co">Truck</h3>
-                           </div>
-                           <div class="col-md-4">
-                              <div class="vehicles_truck">
-                                 <figure><img src="images/truc3.png" alt="#"/></figure>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="carousel-item">
-                  <div class="container">
-                     <div class="carousel-caption">
-                        <div class="row">
-                           <div class="col-md-4">
-                              <div class="vehicles_truck">
-                                 <figure><img src="images/truc1.png" alt="#"/></figure>
-                              </div>
-                           </div>
-                           <div class="col-md-4">
-                              <div class="vehicles_truck">
-                                 <figure><img src="images/truc2.png" alt="#"/></figure>
-                              </div>
-                              <h3 class="blac_co">Truck</h3>
-                           </div>
-                           <div class="col-md-4">
-                              <div class="vehicles_truck">
-                                 <figure><img src="images/truc3.png" alt="#"/></figure>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <a class="carousel-control-prev" href="#veh" role="button" data-slide="prev">
-            <i class="fa fa-angle-left" aria-hidden="true"></i>
-            </a>
-            <a class="carousel-control-next" href="#veh" role="button" data-slide="next">
-            <i class="fa fa-angle-right" aria-hidden="true"></i>
-            </a>
-         </div>
-         <div class="container">
-            <div class="row">
-               <div class="col-md-12">
-                  <a class="read_more" href="#">Read More</a>
-               </div>
-            </div>
-         </div>
-      </section>
-      <!-- end vehicles section -->
-      <!-- testimonial section -->
-      <div id="testimonial" class="testimonial bottom_cross bottom_cross2">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="titlepage">
-                     <h2>Testimonials</h2>
-                     <p>nternet. It uses a dictionary of over 200 Latin words, combined with .</p>
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-md-12">
-                  <div id="myCarousel" class="carousel slide testimonial_Carousel " data-ride="carousel">
-                     <ol class="carousel-indicators">
-                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                        <li data-target="#myCarousel" data-slide-to="1"></li>
-                        <li data-target="#myCarousel" data-slide-to="2"></li>
-                     </ol>
-                     <div class="carousel-inner">
-                        <div class="carousel-item active">
-                           <div class="container">
-                              <div class="carousel-caption ">
-                                 <div class="row">
-                                    <div class="col-md-12">
-                                       <div class="testimonial_box">
-                                          <figure><img src="images/our.png" alt="#"/></figure>
-                                          <h3>Luda Johnson <br><span class="kisu">( Ceo)</span></h3>
-                                          <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 year</p>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="carousel-item">
-                           <div class="container">
-                              <div class="carousel-caption">
-                                 <div class="row">
-                                    <div class="col-md-12">
-                                       <div class="testimonial_box">
-                                          <figure><img src="images/our.png" alt="#"/></figure>
-                                          <h3>Luda Johnson <br><span class="kisu">( Ceo)</span></h3>
-                                          <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 year</p>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="carousel-item">
-                           <div class="container">
-                              <div class="carousel-caption">
-                                 <div class="row">
-                                    <div class="col-md-12">
-                                       <div class="full cross_layout">
-                                          <div class="testimonial_box">
-                                             <figure><img src="images/our.png" alt="#"/></figure>
-                                             <h3>Luda Johnson <br><span class="kisu">( Ceo)</span></h3>
-                                             <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 year</p>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-                     <i class="fa fa-caret-left" aria-hidden="true"></i>
-                     </a>
-                     <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-                     <i class="fa fa-caret-right" aria-hidden="true"></i>
-                     </a>
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-md-12">
-                  <a class="read_more" href="#">Read More</a>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- end testimonial section -->
-      <!-- choose section -->
-      <div class="choose">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="titlepage">
-                     <h2>Why Choose Us</h2>
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-md-5">
-                  <div class="choose_box">
-                     <i><img src="images/why1.png" alt="#"/></i>
-                     <h3>Our Vission</h3>
-                     <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
-                     <a class="read_more" href="#">Read More</a>
-                  </div>
-               </div>
-               <div class="col-md-5 offset-md-2">
-                  <div class="choose_box">
-                     <i><img src="images/why2.png" alt="#"/></i>
-                     <h3>Estimate Shipping</h3>
-                     <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,</p>
-                     <a class="read_more" href="#">Read More</a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- end choose section -->
-      <!-- contact section -->
-      <div id="contact" class="contact">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-12">
-                  <div class="titlepage">
-                     <h2>Requst A call  for You</h2>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="con_bg">
-            <div class="container-fluid">
-               <div class="row">
-                  <div class="col-md-5">
-                     <form id="request" class="main_form">
-                        <div class="row">
-                           <div class="col-md-12 ">
-                              <input class="contactus" placeholder="Name" type="type" name="Name"> 
-                           </div>
-                           <div class="col-md-12">
-                              <input class="contactus" placeholder="Email" type="type" name="Email"> 
-                           </div>
-                           <div class="col-md-12">
-                              <input class="contactus" placeholder="Phone Number" type="type" name="Phone Number">                          
-                           </div>
-                           <div class="col-md-12">
-                              <input class="contactusmess" placeholder="Message" type="type" Message="Name">
-                           </div>
-                           <div class="col-md-12">
-                              <button class="send_btn">Send</button>
-                           </div>
-                        </div>
-                     </form>
-                  </div>
-                  <div class="col-md-7">
-                     <div class="co_tru">
-                        <figure><img src="images/truc4.png" alt="#"/></figure>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- end contact section -->
       <!--  footer -->
       <footer>
          <div class="footer bottom_cross1">
@@ -436,15 +163,6 @@
                   <div class="col-md-8">
                      <div class="map">
                         <figure><img src="images/map.png" alt="#"/></figure>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="copyright">
-               <div class="container">
-                  <div class="row">
-                     <div class="col-md-12">
-                        <p>© 2019 All Rights Reserved. Design by<a href="https://html.design/"> Free Html Templates</a></p>
                      </div>
                   </div>
                </div>
@@ -471,4 +189,3 @@
       </script>
    </body>
 </html>
-
