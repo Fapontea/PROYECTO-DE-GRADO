@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablero de Estadísticas (Cascarón)</title>
+    <link rel="stylesheet" href="css/grafico.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <div class="metric-card">
+                <div class="metric-value">34533</div>
+                <div class="metric-label">Ventas</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">3 Sec</div>
+                <div class="metric-label">Tiempo de cargue</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">110</div>
+                <div class="metric-label">Duplicados</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">1%</div>
+                <div class="metric-label">Porcentaje de error</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">Admin</div>
+                <div class="metric-label">Usuario</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">Fredy SAS</div>
+                <div class="metric-label">Compania</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="top-section">
+                <div class="chart-container">
+                    <h2>Visits by Week of Year</h2>
+                    <div class="placeholder-chart"></div>
+                </div>
+                <div class="chart-container">
+                    <h2>Bounce Rate by Week of Year</h2>
+                    <div class="placeholder-chart"></div>
+                </div>
+            </div>
+
+            <div class="middle-section">
+                <div class="chart-container">
+                    <h2>Traffic Sources</h2>
+                    <div class="placeholder-chart pie"></div>
+                    <ul class="chart-legend">
+                        <li><span class="legend-color direct"></span> Direct</li>
+                        <li><span class="legend-color display"></span> Display</li>
+                        <li><span class="legend-color organic"></span> Organic</li>
+                        <li><span class="legend-color paid"></span> Paid</li>
+                        <li><span class="legend-color referral"></span> Referral</li>
+                        <li><span class="legend-color social"></span> Social</li>
+                    </ul>
+                </div>
+                <div class="chart-container">
+                    <h2>Visitors by User Type</h2>
+                    <div class="placeholder-chart bar"></div>
+                    <ul class="chart-legend">
+                        <li><span class="legend-color new"></span> New</li>
+                        <li><span class="legend-color returning"></span> Returning</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bottom-section">
+                <div class="table-container">
+                    <h2>Top 3 mejores opciones</h2>
+                    <div class="placeholder-table">
+                        <div class="table-row"><span>Organic</span> <span class="bar-indicator" style="width: 15%;"></span> 15%</div>
+                        <div class="table-row"><span>Paid Search</span> <span class="bar-indicator" style="width: 12%;"></span> 12%</div>
+                        <div class="table-row"><span>Direct</span> <span class="bar-indicator" style="width: 11%;"></span> 11%</div>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <h2>Top 3 mejores asesores</h2>
+                    <div class="placeholder-table">
+                        <div class="table-row"><span>Campaign 3</span> <span class="bar-indicator" style="width: 18%;"></span> 18%</div>
+                        <div class="table-row"><span>Campaign 2</span> <span class="bar-indicator" style="width: 11%;"></span> 11%</div>
+                        <div class="table-row"><span>Campaign 1</span> <span class="bar-indicator" style="width: 10%;"></span> 10%</div>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <h2>Top 3 productos actuales</h2>
+                    <div class="placeholder-table">
+                        <div class="table-row"><span>Page 3</span> <span class="bar-indicator" style="width: 29%;"></span> 29%</div>
+                        <div class="table-row"><span>Page 2</span> <span class="bar-indicator" style="width: 13%;"></span> 13%</div>
+                        <div class="table-row"><span>Page 1</span> <span class="bar-indicator" style="width: 12%;"></span> 12%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
