@@ -95,8 +95,213 @@
                         <div class="table-row"><span>Page 1</span> <span class="bar-indicator" style="width: 12%;"></span> 12%</div>
                     </div>
                 </div>
+                </div>
+               
+               
+                <title>Leer PDF, Graficar, Nube de Palabras y Descargar Reporte</title>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/wordcloud2.js/1.0.6/wordcloud2.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+                <style>
+                  body { font-family: Arial, sans-serif; margin: 20px; }
+                  .input-group { margin-bottom: 10px; }
+                  #nubePalabras { width: 600px; height: 400px; border: 1px solid #ccc; margin-top: 20px; }
+                  #graficaResultados { margin-top: 20px; }
+                  #botonDescargar { margin-top: 20px; }
+                </style>
+
+
+              
+              <h2>Subir nuevamente el archivo PDF y Analizar la cantidad de la palabra clave</h2>
+
+              <div class="input-group">
+                <label>Seleccionar PDF:</label><br>
+                <input type="file" id="archivoPDF" accept="application/pdf">
+              </div>
+            
+              <div class="input-group">
+                <label>Palabra a Buscar:</label><br>
+                <input type="text" id="palabraBuscar" placeholder="Escribe una palabra...">
+              </div>
+            
+              <button id="botonProcesar">Procesar PDF</button>
+            
+              <h3>Gráfica de Resultados</h3>
+              <canvas id="graficaResultados" width="600" height="400"></canvas>
+            
+              <h3>Nube de Palabras 🌥️</h3>
+              <div id="nubePalabras"></div>
+            
+              <button id="botonDescargar">📥 Descargar Reporte PDF</button>
+
+              <script>
+               
+    const archivoPDFInput = document.getElementById('archivoPDF');
+    const palabraBuscarInput = document.getElementById('palabraBuscar');
+    const botonProcesar = document.getElementById('botonProcesar');
+    const botonDescargar = document.getElementById('botonDescargar');
+    const ctxGrafica = document.getElementById('graficaResultados').getContext('2d');
+    const nubePalabrasDiv = document.getElementById('nubePalabras');
+
+    let grafico;
+    let archivoPDFSeleccionado;
+    let nombreArchivo = '';
+
+    let resumenDatos = {
+      numPages: 0,
+      totalWords: 0,
+      palabraBuscada: '',
+      palabraRepetida: 0
+    };
+
+    archivoPDFInput.addEventListener('change', (e) => {
+      archivoPDFSeleccionado = e.target.files[0];
+      nombreArchivo = archivoPDFSeleccionado.name;
+    });
+
+    botonProcesar.addEventListener('click', async () => {
+      if (!archivoPDFSeleccionado) {
+        alert('Primero selecciona un archivo PDF.');
+        return;
+      }
+
+      resumenDatos.palabraBuscada = palabraBuscarInput.value.trim().toLowerCase();
+      const fileReader = new FileReader();
+
+      fileReader.onload = async function() {
+        const typedarray = new Uint8Array(this.result);
+        const pdf = await pdfjsLib.getDocument({ data: typedarray }).promise;
+        resumenDatos.numPages = pdf.numPages;
+        resumenDatos.totalWords = 0;
+        resumenDatos.palabraRepetida = 0;
+        const frecuenciaPalabras = {};
+
+        for (let i = 1; i <= resumenDatos.numPages; i++) {
+          const page = await pdf.getPage(i);
+          const textContent = await page.getTextContent();
+          const pageText = textContent.items.map(item => item.str).join(' ');
+
+          const palabras = pageText
+            .toLowerCase()
+            .replace(/[^\w\sáéíóúüñ]/gi, '')
+            .split(/\s+/)
+            .filter(word => word.length > 2);
+
+          resumenDatos.totalWords += palabras.length;
+
+          palabras.forEach(word => {
+            frecuenciaPalabras[word] = (frecuenciaPalabras[word] || 0) + 1;
+          });
+
+          if (resumenDatos.palabraBuscada) {
+            resumenDatos.palabraRepetida += palabras.filter(word => word === resumenDatos.palabraBuscada).length;
+          }
+        }
+
+        if (grafico) grafico.destroy();
+
+        grafico = new Chart(ctxGrafica, {
+          type: 'bar',
+          data: {
+            labels: ['Páginas', 'Palabras', `Veces "${resumenDatos.palabraBuscada}"`],
+            datasets: [{
+              label: 'Conteo',
+              data: [resumenDatos.numPages, resumenDatos.totalWords, resumenDatos.palabraRepetida],
+              backgroundColor: [
+                'rgba(75, 192, 192, 0.6)',
+                'rgba(255, 206, 86, 0.6)',
+                'rgba(255, 99, 132, 0.6)'
+              ],
+              borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(255, 99, 132, 1)'
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: { beginAtZero: true }
+            }
+          }
+        });
+
+        const palabrasFrecuentes = Object.entries(frecuenciaPalabras)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 100);
+
+        WordCloud(nubePalabrasDiv, {
+          list: palabrasFrecuentes,
+          gridSize: 10,
+          weightFactor: 5,
+          fontFamily: 'Times, serif',
+          color: 'random-dark',
+          backgroundColor: '#f5f5f5'
+        });
+      };
+
+      fileReader.readAsArrayBuffer(archivoPDFSeleccionado);
+    });
+
+    botonDescargar.addEventListener('click', async () => {
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF('p', 'mm', 'a4');
+
+      const canvasGrafica = document.getElementById('graficaResultados');
+      const graficaImg = canvasGrafica.toDataURL('image/png');
+
+      const fecha = new Date();
+      const fechaTexto = fecha.toLocaleDateString('es-ES') + ' ' + fecha.toLocaleTimeString('es-ES');
+
+      // --- Página 1: Portada ---
+      pdf.setFontSize(22);
+      pdf.text('📄 Análisis de Documento PDF', 40, 80);
+
+      pdf.setFontSize(16);
+      pdf.text(`Archivo Analizado:`, 40, 100);
+      pdf.setFontSize(12);
+      pdf.text(nombreArchivo, 40, 110);
+
+      pdf.setFontSize(16);
+      pdf.text(`Fecha de Análisis:`, 40, 130);
+      pdf.setFontSize(12);
+      pdf.text(fechaTexto, 40, 140);
+
+      pdf.addPage();
+
+      // --- Página 2: Resumen y Gráfica ---
+      await html2canvas(nubePalabrasDiv).then(canvas => {
+        const nubeImg = canvas.toDataURL('image/png');
+
+        pdf.setFontSize(18);
+        pdf.text('📋 Resumen de Análisis', 10, 20);
+
+        pdf.setFontSize(12);
+        pdf.text(`- Número de Páginas: ${resumenDatos.numPages}`, 10, 30);
+        pdf.text(`- Palabras Totales: ${resumenDatos.totalWords}`, 10, 37);
+
+        if (resumenDatos.palabraBuscada) {
+          pdf.text(`- Veces que aparece "${resumenDatos.palabraBuscada}": ${resumenDatos.palabraRepetida}`, 10, 44);
+        }
+
+        pdf.text('Gráfica de Resultados:', 10, 55);
+        pdf.addImage(graficaImg, 'PNG', 10, 60, 190, 80);
+
+        pdf.text('Nube de Palabras:', 10, 150);
+        pdf.addImage(nubeImg, 'PNG', 10, 155, 190, 80);
+
+        pdf.save('reporte_analisis.pdf');
+      });
+    });
+  </script>
             </div>
         </div>
     </div>
 </body>
 </html>
+
+
