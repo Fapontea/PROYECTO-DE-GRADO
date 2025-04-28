@@ -30,8 +30,8 @@
                 <div class="metric-label">Usuario</div>
             </div>
             <div class="metric-card">
-                <div class="metric-value">Fredy SAS</div>
-                <div class="metric-label">Compania</div>
+                <div class="metric-value">Fredy y Juan SAS</div>
+                <div class="metric-label">Compania DataInsigth Consultores</div>
             </div>
         </div>
 
@@ -39,18 +39,18 @@
             <div class="top-section">
                 <div class="chart-container">
                     <h2>Visits by Week of Year</h2>
-                    <div class="placeholder-chart"></div>
+                    <canvas id="graficaVisitasSemana" width="600" height="400"></canvas>
                 </div>
                 <div class="chart-container">
                     <h2>Bounce Rate by Week of Year</h2>
-                    <div class="placeholder-chart"></div>
+                    <canvas id="graficaPastelRebote" width="400" height="400"></canvas>
                 </div>
             </div>
 
             <div class="middle-section">
                 <div class="chart-container">
                     <h2>Traffic Sources</h2>
-                    <div class="placeholder-chart pie"></div>
+                    <canvas id="graficaDispercionTrafico" width="600" height="400"></canvas>
                     <ul class="chart-legend">
                         <li><span class="legend-color direct"></span> Direct</li>
                         <li><span class="legend-color display"></span> Display</li>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="chart-container">
                     <h2>Visitors by User Type</h2>
-                    <div class="placeholder-chart bar"></div>
+                    <canvas id="graficaVisitantesTipo" width="600" height="400"></canvas>
                     <ul class="chart-legend">
                         <li><span class="legend-color new"></span> New</li>
                         <li><span class="legend-color returning"></span> Returning</li>
@@ -138,6 +138,189 @@
 
               <script>
                
+               // Primera Funcion
+               const ctxVisitas = document.getElementById('graficaVisitasSemana').getContext('2d');
+const semanas = ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5', 'Semana 6', 'Semana 7', 'Semana 8', 'Semana 9', 'Semana 10', 'Semana 11', 'Semana 12'];
+const visitas = [120, 190, 300, 500, 200, 300, 450, 470, 410, 380, 420, 460];
+
+const graficaVisitas = new Chart(ctxVisitas, {
+  type: 'line',
+  data: {
+    labels: semanas,
+    datasets: [{
+      label: 'Visitas por semana',
+      data: visitas,
+      fill: false,
+      borderColor: 'rgba(75, 192, 192, 1)',
+      tension: 0.4
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: 'Visitas Semanales 📅'
+      }
+    }
+  }
+});
+    
+// Segunda Funcion
+
+const semanas2 = ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5', 'Semana 6', 'Semana 7', 'Semana 8', 'Semana 9', 'Semana 10', 'Semana 11', 'Semana 12'];
+const tasaRebote = [50, 48, 45, 43, 47, 44, 42, 40, 38, 39, 41, 37];
+
+// Clasificación
+let altos = 0;
+let medios = 0;
+let bajos = 0;
+
+tasaRebote.forEach(valor => {
+  if (valor > 45) {
+    altos++;
+  } else if (valor >= 30 && valor <= 45) {
+    medios++;
+  } else {
+    bajos++;
+  }
+});
+
+// Crear el gráfico de pastel
+const ctxPastelRebote = document.getElementById('graficaPastelRebote').getContext('2d');
+
+const graficaPastelRebote = new Chart(ctxPastelRebote, {
+  type: 'pie',
+  data: {
+    labels: ['Rebote Alto (>45%)', 'Rebote Medio (30%-45%)', 'Rebote Bajo (<30%)'],
+    datasets: [{
+      data: [altos, medios, bajos],
+      backgroundColor: [
+        '#FF6384', // Alto
+        '#FFCE56', // Medio
+        '#36A2EB'  // Bajo
+      ]
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: 'Tasa de Rebote por Categoría 🥧'
+      }
+    }
+  }
+});
+
+
+// Tercera Funcion
+
+const ctxDispercion = document.getElementById('graficaDispercionTrafico').getContext('2d');
+
+const graficaDispercionTrafico = new Chart(ctxDispercion, {
+  type: 'scatter',
+  data: {
+    datasets: [
+      {
+        label: 'Orgánico',
+        data: [{x: 120, y: 500}], // duración vs usuarios
+        backgroundColor: 'rgba(75, 192, 192, 1)'
+      },
+      {
+        label: 'Referencias',
+        data: [{x: 80, y: 200}],
+        backgroundColor: 'rgba(153, 102, 255, 1)'
+      },
+      {
+        label: 'Redes Sociales',
+        data: [{x: 45, y: 300}],
+        backgroundColor: 'rgba(255, 159, 64, 1)'
+      },
+      {
+        label: 'Email',
+        data: [{x: 60, y: 150}],
+        backgroundColor: 'rgba(255, 99, 132, 1)'
+      },
+      {
+        label: 'Tráfico Directo',
+        data: [{x: 90, y: 400}],
+        backgroundColor: 'rgba(54, 162, 235, 1)'
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: 'Fuentes de Tráfico - Dispersión 🌐'
+      }
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Duración Promedio (segundos)'
+        }
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Número de Usuarios'
+        }
+      }
+    }
+  }
+});
+
+
+
+
+// Cuarta Funcion
+
+const ctxVisitantesTipo = document.getElementById('graficaVisitantesTipo').getContext('2d');
+
+const graficaVisitantesTipo = new Chart(ctxVisitantesTipo, {
+  type: 'bar',
+  data: {
+    labels: ['Nuevos Visitantes', 'Visitantes Recurrentes'],
+    datasets: [{
+      label: 'Cantidad de Usuarios',
+      data: [750, 250], // Puedes modificar los datos reales
+      backgroundColor: [
+        'rgba(54, 162, 235, 0.7)', // Nuevos (Azul)
+        'rgba(255, 206, 86, 0.7)'  // Recurrentes (Amarillo)
+      ],
+      borderColor: [
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)'
+      ],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: 'Visitantes por Tipo de Usuario 👥'
+      },
+      legend: {
+        display: false // No mostrar leyenda si ya está claro por colores
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+
+
+// Quinta Funcion
+
     const archivoPDFInput = document.getElementById('archivoPDF');
     const palabraBuscarInput = document.getElementById('palabraBuscar');
     const botonProcesar = document.getElementById('botonProcesar');
@@ -270,8 +453,10 @@
       pdf.text(`Fecha de Análisis:`, 40, 130);
       pdf.setFontSize(12);
       pdf.text(fechaTexto, 40, 140);
-
       pdf.addPage();
+
+      
+
 
       // --- Página 2: Resumen y Gráfica ---
       await html2canvas(nubePalabrasDiv).then(canvas => {
@@ -293,8 +478,10 @@
 
         pdf.text('Nube de Palabras:', 10, 150);
         pdf.addImage(nubeImg, 'PNG', 10, 155, 190, 80);
-
         pdf.save('reporte_analisis.pdf');
+
+        
+        
       });
     });
   </script>
@@ -303,5 +490,3 @@
     </div>
 </body>
 </html>
-
-
